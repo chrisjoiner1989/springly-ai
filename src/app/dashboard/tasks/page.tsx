@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import KanbanBoard from "@/components/kanban/KanbanBoard";
 import Navigation from "@/components/layout/Navigation";
 import AITaskCreator from "@/components/tasks/AITaskCreator";
+import AISetupNotice from "@/components/ui/AISetupNotice";
 import { Task } from "@prisma/client";
 
 export default function TasksPage() {
@@ -88,10 +89,10 @@ export default function TasksPage() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading tasks...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading tasks...</p>
         </div>
       </div>
     );
@@ -102,14 +103,17 @@ export default function TasksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Navigation />
 
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
+          {/* AI Setup Notice */}
+          <AISetupNotice />
+
           {/* AI Task Creator */}
           <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-foreground">
               Task Management
             </h1>
             <AITaskCreator

@@ -9,12 +9,14 @@ Sprigly is a productivity dashboard built with Next.js 15, featuring task manage
 ## Development Commands
 
 ### Essential Commands
+
 - `npm run dev` - Start development server with Turbopack (http://localhost:3000)
 - `npm run build` - Build production version with Turbopack
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint for code quality
 
 ### Database Commands (Prisma)
+
 - `npx prisma generate` - Generate Prisma client (outputs to `src/generated/prisma/`)
 - `npx prisma db push` - Push schema to database without migrations
 - `npx prisma studio` - Open Prisma Studio for database exploration
@@ -23,6 +25,7 @@ Sprigly is a productivity dashboard built with Next.js 15, featuring task manage
 ## Architecture Overview
 
 ### App Structure
+
 ```
 src/
 ├── app/                    # App Router (Next.js 15)
@@ -40,12 +43,14 @@ src/
 ```
 
 ### Database Configuration
+
 - Uses PostgreSQL with Prisma ORM
 - Database URL configured via `DATABASE_URL` environment variable
 - Prisma client outputs to `src/generated/prisma/`
 - Connection pooling and health checks implemented in `src/lib/db.ts`
 
 ### Authentication System
+
 - JWT-based authentication with 7-day expiration
 - Bearer token authentication for API routes
 - Helper functions in `src/lib/auth.ts` for token management
@@ -53,7 +58,9 @@ src/
 - Protected route wrapper via `requireAuth()` function
 
 ### API Design Patterns
+
 All API routes follow consistent patterns:
+
 - GET requests return collections (e.g., `{ tasks: [...] }`)
 - POST requests create new resources with validation
 - PUT requests update existing resources
@@ -64,16 +71,19 @@ All API routes follow consistent patterns:
 ## Key Implementation Details
 
 ### Path Configuration
+
 - TypeScript path alias: `@/*` maps to `./src/*`
 - Prisma client: Import from `@prisma/client` (generated in `src/generated/prisma/`)
 
 ### Styling and UI
+
 - Tailwind CSS v4 with PostCSS processing
 - Geist fonts (Sans and Mono) configured in root layout
 - Consistent component patterns in dashboard pages
 - UI components in `src/components/ui/` (e.g., `Button.tsx`)
 
 ### Development Environment
+
 - Next.js 15 with App Router and Turbopack
 - TypeScript with strict configuration
 - ESLint with Next.js and TypeScript presets
@@ -82,21 +92,25 @@ All API routes follow consistent patterns:
 ## Important Notes
 
 ### Security Considerations
+
 - JWT secret should be properly configured via `JWT_SECRET` environment variable
 - Current password hashing is placeholder - implement bcrypt for production
 - API routes include basic authentication but need proper user context integration
 
 ### Data Flow
+
 - All API routes currently use in-memory mock data
 - Database integration ready via Prisma client in `src/lib/db.ts`
 - Frontend components are static HTML - need to integrate with API endpoints
 
 ### Testing Strategy
+
 - No test framework currently configured
 - Consider adding Jest + Testing Library for component tests
 - API routes should have integration tests
 
 ## Environment Variables Required
+
 ```
 DATABASE_URL="postgresql://..."
 JWT_SECRET="your-secret-key"

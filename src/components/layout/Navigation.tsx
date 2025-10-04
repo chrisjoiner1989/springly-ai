@@ -3,6 +3,13 @@
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import SpriglyLogo from "@/components/ui/SpriglyLogo";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import {
+  DashboardIcon,
+  TasksIcon,
+  EventsIcon,
+  ChatIcon,
+} from "@/components/ui/Icons";
 
 interface NavigationProps {
   className?: string;
@@ -14,17 +21,19 @@ export default function Navigation({ className = "" }: NavigationProps) {
   const pathname = usePathname();
 
   const navigation = [
-    { name: "Dashboard", href: "/dashboard", icon: "📊" },
-    { name: "Tasks", href: "/dashboard/tasks", icon: "📋" },
-    { name: "Events", href: "/dashboard/events", icon: "📅" },
-    { name: "Chat", href: "/dashboard/chat", icon: "💬" },
+    { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
+    { name: "Tasks", href: "/dashboard/tasks", icon: TasksIcon },
+    { name: "Events", href: "/dashboard/events", icon: EventsIcon },
+    { name: "Chat", href: "/dashboard/chat", icon: ChatIcon },
   ];
 
   const isActive = (href: string) => pathname === href;
 
   if (status === "loading") {
     return (
-      <nav className={`bg-white shadow-sm border-b ${className}`}>
+      <nav
+        className={`bg-background shadow-sm border-b border-border ${className}`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -41,7 +50,9 @@ export default function Navigation({ className = "" }: NavigationProps) {
   }
 
   return (
-    <nav className={`bg-white shadow-sm border-b ${className}`}>
+    <nav
+      className={`bg-background shadow-sm border-b border-border ${className}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and Navigation */}
@@ -63,11 +74,11 @@ export default function Navigation({ className = "" }: NavigationProps) {
                   onClick={() => router.push(item.href)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? "bg-teal-100 text-teal-700"
-                      : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                      ? "bg-accent text-accent-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
                   }`}
                 >
-                  <span className="mr-2">{item.icon}</span>
+                  <item.icon className="w-4 h-4 mr-2 text-teal-600 dark:text-teal-400" />
                   {item.name}
                 </button>
               ))}
@@ -76,10 +87,12 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
+
             <div className="hidden sm:block">
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-muted-foreground">
                 Welcome,{" "}
-                <span className="font-medium">
+                <span className="font-medium text-foreground">
                   {session.user?.name || session.user?.email}
                 </span>
               </span>
@@ -87,7 +100,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
             <button
               onClick={() => signOut()}
-              className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Sign out
             </button>
@@ -95,7 +108,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden border-t border-gray-200">
+        <div className="md:hidden border-t border-border">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
               <button
@@ -103,11 +116,11 @@ export default function Navigation({ className = "" }: NavigationProps) {
                 onClick={() => router.push(item.href)}
                 className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors ${
                   isActive(item.href)
-                    ? "bg-teal-100 text-teal-700"
-                    : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 }`}
               >
-                <span className="mr-2">{item.icon}</span>
+                <item.icon className="w-4 h-4 mr-2 text-teal-600 dark:text-teal-400" />
                 {item.name}
               </button>
             ))}

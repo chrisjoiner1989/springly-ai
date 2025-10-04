@@ -31,43 +31,46 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center min-h-screen text-center">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             {/* Logo */}
-            <div className="mb-8 flex justify-center">
-              <SpriglyLogo size="xl" />
+            <div className="mb-12 flex justify-center">
+              <div className="p-8">
+                <SpriglyLogo size="xl" />
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Welcome to <span className="text-teal-600">Sprigly</span>
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-8 leading-tight">
+              Welcome to <span className="text-primary">Sprigly</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              A modern task management and collaboration platform with real-time
-              chat, events, and kanban boards.
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+              A modern task management and collaboration platform with
+              AI-powered insights, real-time chat, and intelligent kanban
+              boards.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="/auth/register"
-                className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
+                className="bg-primary text-primary-foreground font-semibold py-4 px-10 rounded-lg transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
               >
                 Get Started
               </a>
               <a
                 href="/auth/login"
-                className="border border-teal-600 text-teal-600 hover:bg-teal-50 font-medium py-3 px-8 rounded-lg transition-colors"
+                className="border border-border text-foreground font-semibold py-4 px-10 rounded-lg transition-all duration-200 hover:bg-accent hover:text-accent-foreground"
               >
                 Sign In
               </a>
             </div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+            <div className="card p-8 hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center mb-6 mx-auto">
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-6 h-6 text-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -80,19 +83,19 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Task Management
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                AI-Powered Tasks
               </h3>
-              <p className="text-gray-600">
-                Organize your work with drag-and-drop kanban boards and
-                priority-based task management.
+              <p className="text-muted-foreground leading-relaxed">
+                Organize your work with intelligent task prioritization,
+                drag-and-drop kanban boards, and AI-generated insights.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+            <div className="card p-8 hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center mb-6 mx-auto">
                 <svg
-                  className="w-6 h-6 text-green-600"
+                  className="w-6 h-6 text-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -105,19 +108,19 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Event Planning
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                Smart Events
               </h3>
-              <p className="text-gray-600">
-                Schedule and manage events with our intuitive calendar interface
-                and team coordination tools.
+              <p className="text-muted-foreground leading-relaxed">
+                Schedule and manage events with our intuitive calendar
+                interface, team coordination tools, and automated reminders.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+            <div className="card p-8 hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center mb-6 mx-auto">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -130,12 +133,12 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold text-foreground mb-4">
                 Real-time Chat
               </h3>
-              <p className="text-gray-600">
-                Collaborate with your team through instant messaging and
-                real-time communication.
+              <p className="text-muted-foreground leading-relaxed">
+                Collaborate with your team through instant messaging, file
+                sharing, and real-time communication.
               </p>
             </div>
           </div>

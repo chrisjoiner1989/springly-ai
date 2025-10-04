@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { TaskAnalysis, analyzeTask } from "@/lib/ai";
 import { Task } from "@prisma/client";
+
+interface TaskAnalysis {
+  suggestedPriority: "low" | "medium" | "high";
+  reasoning: string;
+  estimatedHours: number;
+  dependencies: string[];
+  suggestions: string[];
+}
 
 interface AITaskAnalyzerProps {
   task: Task;
@@ -29,15 +36,29 @@ export default function AITaskAnalyzer({
         .filter((t) => t.id !== task.id)
         .map((t) => t.title);
 
-      const aiAnalysis = await analyzeTask(
-        task.title,
-        task.description || "",
-        task.dueDate ? new Date(task.dueDate).toISOString() : undefined,
-        existingTaskTitles
-      );
+      const response = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "analyze_task",
+          title: task.title,
+          description: task.description || "",
+          dueDate: task.dueDate
+            ? new Date(task.dueDate).toISOString()
+            : undefined,
+          existingTasks: existingTaskTitles,
+        }),
+      });
 
-      setAnalysis(aiAnalysis);
-      setShowAnalysis(true);
+      if (response.ok) {
+        const data = await response.json();
+        setAnalysis(data.analysis);
+        setShowAnalysis(true);
+      } else {
+        setError("Failed to analyze task. Please try again.");
+      }
     } catch (error) {
       setError("Failed to analyze task. Please try again.");
       console.error("AI analysis error:", error);

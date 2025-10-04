@@ -1,9 +1,11 @@
 import OpenAI from "openai";
 
 // Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null;
 
 export interface TaskSuggestion {
   title: string;
@@ -30,6 +32,20 @@ export async function analyzeTask(
   dueDate?: string,
   existingTasks: string[] = []
 ): Promise<TaskAnalysis> {
+  if (!openai) {
+    return {
+      suggestedPriority: "medium",
+      reasoning:
+        "AI features require OpenAI API key. Please configure OPENAI_API_KEY in your environment variables.",
+      estimatedHours: 2,
+      dependencies: [],
+      suggestions: [
+        "Configure OpenAI API key for AI features",
+        "Review task manually",
+      ],
+    };
+  }
+
   try {
     const prompt = `
 You are an AI productivity assistant. Analyze this task and provide insights:
@@ -93,6 +109,26 @@ export async function generateTaskSuggestions(
   projectContext: string,
   existingTasks: string[] = []
 ): Promise<TaskSuggestion[]> {
+  if (!openai) {
+    return [
+      {
+        title: "Configure OpenAI API Key",
+        description:
+          "Set up your OpenAI API key to enable AI-powered task suggestions",
+        priority: "high",
+        estimatedHours: 0.5,
+        reasoning: "Required for AI features to work",
+      },
+      {
+        title: "Review Project Requirements",
+        description: "Go through all project documentation and requirements",
+        priority: "high",
+        estimatedHours: 1,
+        reasoning: "Important foundation task",
+      },
+    ];
+  }
+
   try {
     const prompt = `
 You are an AI project management assistant. Based on this project context, suggest 3-5 relevant tasks:
@@ -170,6 +206,10 @@ export async function getProductivityInsights(
   }>,
   currentTasks: Array<{ title: string; priority: string; dueDate?: string }>
 ): Promise<string> {
+  if (!openai) {
+    return "AI insights require OpenAI API key. Configure OPENAI_API_KEY in your environment variables to enable productivity insights.";
+  }
+
   try {
     const prompt = `
 Analyze this productivity data and provide insights:

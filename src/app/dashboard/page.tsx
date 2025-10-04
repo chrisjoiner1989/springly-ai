@@ -4,6 +4,11 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Navigation from "@/components/layout/Navigation";
+import {
+  TasksCardIcon,
+  EventsCardIcon,
+  ChatCardIcon,
+} from "@/components/ui/Icons";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -17,10 +22,10 @@ export default function DashboardPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -31,97 +36,91 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Navigation />
 
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-teal-500 rounded-md flex items-center justify-center">
-                      <span className="text-white text-sm font-medium">T</span>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Tasks
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">12</dd>
-                    </dl>
+            <div className="card p-6 hover:shadow-md transition-all duration-200">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-teal-50 dark:bg-teal-900/20 rounded-lg flex items-center justify-center">
+                    <TasksCardIcon className="w-6 h-6 text-teal-600 dark:text-teal-400" />
                   </div>
                 </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-medium text-muted-foreground truncate">
+                      Tasks
+                    </dt>
+                    <dd className="text-2xl font-bold text-foreground">12</dd>
+                  </dl>
+                </div>
               </div>
-              <div className="bg-gray-50 px-5 py-3">
+              <div className="mt-4">
                 <div className="text-sm">
                   <a
                     href="/dashboard/tasks"
-                    className="font-medium text-teal-700 hover:text-teal-900"
+                    className="font-medium text-primary hover:text-primary/80 transition-colors"
                   >
-                    View all tasks
+                    View all tasks →
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                      <span className="text-white text-sm font-medium">E</span>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Events
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">5</dd>
-                    </dl>
+            <div className="card p-6 hover:shadow-md transition-all duration-200">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-teal-50 dark:bg-teal-900/20 rounded-lg flex items-center justify-center">
+                    <EventsCardIcon className="w-6 h-6 text-teal-600 dark:text-teal-400" />
                   </div>
                 </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-medium text-muted-foreground truncate">
+                      Events
+                    </dt>
+                    <dd className="text-2xl font-bold text-foreground">5</dd>
+                  </dl>
+                </div>
               </div>
-              <div className="bg-gray-50 px-5 py-3">
+              <div className="mt-4">
                 <div className="text-sm">
                   <a
                     href="/dashboard/events"
-                    className="font-medium text-green-700 hover:text-green-900"
+                    className="font-medium text-primary hover:text-primary/80 transition-colors"
                   >
-                    View all events
+                    View all events →
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                      <span className="text-white text-sm font-medium">C</span>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Chat
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">3</dd>
-                    </dl>
+            <div className="card p-6 hover:shadow-md transition-all duration-200">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-teal-50 dark:bg-teal-900/20 rounded-lg flex items-center justify-center">
+                    <ChatCardIcon className="w-6 h-6 text-teal-600 dark:text-teal-400" />
                   </div>
                 </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-medium text-muted-foreground truncate">
+                      Chat
+                    </dt>
+                    <dd className="text-2xl font-bold text-foreground">3</dd>
+                  </dl>
+                </div>
               </div>
-              <div className="bg-gray-50 px-5 py-3">
+              <div className="mt-4">
                 <div className="text-sm">
                   <a
                     href="/dashboard/chat"
-                    className="font-medium text-blue-700 hover:text-blue-900"
+                    className="font-medium text-primary hover:text-primary/80 transition-colors"
                   >
-                    View chat
+                    View chat →
                   </a>
                 </div>
               </div>

@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { TaskSuggestion, generateTaskSuggestions } from "@/lib/ai";
+
+interface TaskSuggestion {
+  title: string;
+  description: string;
+  priority: "low" | "medium" | "high";
+  estimatedHours: number;
+  reasoning: string;
+}
 
 interface AITaskCreatorProps {
   onTaskCreate: (task: {
@@ -33,11 +40,24 @@ export default function AITaskCreator({
     setError("");
 
     try {
-      const aiSuggestions = await generateTaskSuggestions(
-        projectContext,
-        existingTasks
-      );
-      setSuggestions(aiSuggestions);
+      const response = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "generate_suggestions",
+          projectContext,
+          existingTasks,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuggestions(data.suggestions || []);
+      } else {
+        setError("Failed to generate suggestions. Please try again.");
+      }
     } catch (error) {
       setError("Failed to generate suggestions. Please try again.");
       console.error("AI suggestion error:", error);
@@ -102,7 +122,7 @@ export default function AITaskCreator({
                 value={projectContext}
                 onChange={(e) => setProjectContext(e.target.value)}
                 placeholder="e.g., Building a React e-commerce app with user authentication, payment processing, and admin dashboard..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm text-gray-900 bg-white"
                 rows={3}
               />
             </div>
